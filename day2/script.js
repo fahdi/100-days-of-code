@@ -28,51 +28,60 @@ function buildCalendar() {
     for (let i = 1; i <= daysInMonth; i++) {
       document.getElementById(`${months[month]}`).getElementsByClassName("days_container")[0].innerHTML += `<div class="days"><div class="circle">${i}</div></div>`;
     }
-
     counter++;
   }
+
+  let existingCalendarInfo = JSON.parse(localStorage.getItem("calendar_info"));
+  if (existingCalendarInfo === null) {
+    existingCalendarInfo = [];
+  }
+
+  existingCalendarInfo.forEach(function (dayofMonth) {
+    let mon = dayofMonth.month;
+    let day = dayofMonth.day;
+    let mood = dayofMonth.mood;
+    let monthIndex = months.indexOf(mon);
+    let dayIndex = document.getElementById(`${months[monthIndex]}`).getElementsByClassName("days")[day - 1].getElementsByClassName("circle")[0];
+
+    dayIndex.style.backgroundColor = mood;
+  });
 }
 
 var moods = document.querySelectorAll('.moods_container');
 moods.forEach((mood) => {
   mood.addEventListener('click', (e) => {
-    // console.log(e.target);
     let mood = e.target.parentElement.id;
     var currentButton = e.target.parentElement;
-
     let buttons = e.target.parentElement.parentElement.getElementsByTagName('button');
 
     Array.from(buttons).forEach((button) => {
-
       if (button.id !== currentButton.id) {
         button.style.backgroundColor = config.resetColor;
         let moodNumber = button.id.replace('mood_', '');
-        // console.log(button.getElementsByClassName('far')[0]);
-        button.getElementsByClassName('far')[0].style.color = config.moodColors[moodNumber - 1];
+        if (button.getElementsByClassName('far')[0]) {
+          button.getElementsByClassName('far')[0].style.color = config.moodColors[moodNumber - 1];
+        }
       }
     });
 
     if (currentButton.style.backgroundColor === '') {
-      // console.log("Not styled");
       let moodNumber = mood.replace('mood_', '');
       document.getElementById(e.target.parentElement.id).style.backgroundColor = config.moodColors[moodNumber - 1];
       e.target.style.color = 'white';
     } else {
-      //  console.log("Already styled");
+
       let moodNumber = mood.replace('mood_', '');
       document.getElementById(e.target.parentElement.id).style.removeProperty('background-color');
       e.target.style.color = config.moodColors[moodNumber - 1];
     }
-
-
   });
 });
 
 document.getElementById("calendar").addEventListener('click', (e) => {
-  //console.log(e.target.className);
+
   if (e.target.className === 'circle') {
     let moods = document.querySelectorAll('.moods_container button');
-    //console.log(moods);
+
     var currentMood;
     moods.forEach((mood) => {
       let moodNumber = mood.id.replace('mood_', '');
@@ -82,17 +91,12 @@ document.getElementById("calendar").addEventListener('click', (e) => {
     });
 
     e.target.style.backgroundColor = currentMoodColor;
-    // console.log(e.target.style.backgroundColor);
-    // console.log(e.target.innerHTML);
-    // console.log(e.target.parentElement.parentElement.parentElement.id);
 
     let calendarInfo = {
       day: e.target.innerHTML,
       month: e.target.parentElement.parentElement.parentElement.id,
       mood: e.target.style.backgroundColor,
     }
-
-    //console.log(calendarInfo);
 
     let existingCalendarInfo = JSON.parse(localStorage.getItem("calendar_info"));
     if (existingCalendarInfo === null) {
@@ -103,14 +107,7 @@ document.getElementById("calendar").addEventListener('click', (e) => {
 
     localStorage.setItem("calendar_info", JSON.stringify(existingCalendarInfo));
 
-    // console.log(existingCalendarInfo);
-
-    existingCalendarInfo.forEach((dayOfMonth) => {
-      console.log(dayOfMonth);
-    });
-
   }
 });
 
 buildCalendar();
-
