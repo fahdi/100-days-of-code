@@ -20,7 +20,7 @@ function buildCalendar() {
 
   var counter = 1;
   for (let month in months) {
-    document.getElementById("calendar").innerHTML += `<div class="months" id="${months[month]}">${months[month]}</div>`;
+    document.getElementById("calendar").innerHTML += `<div class="months" id="${months[month]}"><h3>${months[month]}</h3></div>`;
     document.getElementById(`${months[month]}`).innerHTML += `<div class="days_container"></div>`;
     let currentDate = new Date();
     let daysInMonth = new Date(currentDate.getFullYear(), counter, 0).getDate();
@@ -47,7 +47,7 @@ moods.forEach((mood) => {
       if (button.id !== currentButton.id) {
         button.style.backgroundColor = config.resetColor;
         let moodNumber = button.id.replace('mood_', '');
-        console.log(button.getElementsByClassName('far')[0]);
+        // console.log(button.getElementsByClassName('far')[0]);
         button.getElementsByClassName('far')[0].style.color = config.moodColors[moodNumber - 1];
       }
     });
@@ -68,4 +68,49 @@ moods.forEach((mood) => {
   });
 });
 
+document.getElementById("calendar").addEventListener('click', (e) => {
+  //console.log(e.target.className);
+  if (e.target.className === 'circle') {
+    let moods = document.querySelectorAll('.moods_container button');
+    //console.log(moods);
+    var currentMood;
+    moods.forEach((mood) => {
+      let moodNumber = mood.id.replace('mood_', '');
+      if (mood.style.backgroundColor !== 'rgb(255, 255, 255)') {
+        currentMoodColor = mood.style.backgroundColor;
+      }
+    });
+
+    e.target.style.backgroundColor = currentMoodColor;
+    // console.log(e.target.style.backgroundColor);
+    // console.log(e.target.innerHTML);
+    // console.log(e.target.parentElement.parentElement.parentElement.id);
+
+    let calendarInfo = {
+      day: e.target.innerHTML,
+      month: e.target.parentElement.parentElement.parentElement.id,
+      mood: e.target.style.backgroundColor,
+    }
+
+    //console.log(calendarInfo);
+
+    let existingCalendarInfo = JSON.parse(localStorage.getItem("calendar_info"));
+    if (existingCalendarInfo === null) {
+      existingCalendarInfo = [];
+    }
+
+    existingCalendarInfo.push(calendarInfo);
+
+    localStorage.setItem("calendar_info", JSON.stringify(existingCalendarInfo));
+
+    // console.log(existingCalendarInfo);
+
+    existingCalendarInfo.forEach((dayOfMonth) => {
+      console.log(dayOfMonth);
+    });
+
+  }
+});
+
 buildCalendar();
+
