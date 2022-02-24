@@ -27,8 +27,67 @@ body {
     width: 100vw;
 }
 
+.screen.up {
+    margin-top: -100vh;
+}
+
+.btn {
+    border: 0;
+    background-color: #fff;
+    color: #516dff;
+    cursor: pointer;
+    font-family: 'Press Start 2P';
+    padding: 15px 20px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn:active {
+    opacity: 0.7;
+}
+
 button#start_btn {
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
+}
+
+
+.insects_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+}
+
+.insects_list li {
+    margin: 10px;
+}
+
+.choose_insect_btn {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    font-family: 'Press Start 2P';
+    width: 150px;
+    height: 150px;
+}
+
+.choose_insect_btn:hover {
+    background-color: #fff;
+    color: #516dff;
+}
+
+.choose_insect_btn:active {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.choose_insect_btn img {
+    object-fit: contain;
+    width: 100px;
+    height: 100px;
 }
