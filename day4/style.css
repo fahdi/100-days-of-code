@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #516dff;
+    color: #fff;
+    flex-direction: column;
+    font-family: 'Press Start 2P';
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: margin 0.75s linear;
+    height: 100vh;
+    width: 100vw;
+}
+
+button#start_btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
